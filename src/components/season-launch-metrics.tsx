@@ -249,7 +249,7 @@ function PeakDateMethodInfoCard({ className }: { className?: string }) {
           release we look at the days around launch and use the one calendar day (in UTC) when
           Steam saw the <em>most people playing at the same time</em> for that day. The busiest
           day is often a few days after the season or league actually starts. Example: Season of
-          Slaughter went live March 11, 2026, but the high we use is March 15, 2026.
+          Slaughter went live March 11 2026, but it peaked on March 15 2026 so we used it instead.
         </p>
       </CardContent>
     </Card>
