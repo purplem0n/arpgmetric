@@ -1,9 +1,18 @@
-import { SeasonLaunchMetrics } from "@/components/season-launch-metrics"
+import { Navigate, Route, Routes } from "react-router-dom"
+
+import {
+  DEFAULT_GAME_PATH,
+  SeasonLaunchMetrics,
+} from "@/components/season-launch-metrics"
 
 export function App() {
   return (
     <div className="mx-auto min-h-svh w-full max-w-7xl p-4 sm:p-6">
-      <SeasonLaunchMetrics />
+      <Routes>
+        <Route path="/" element={<Navigate to={DEFAULT_GAME_PATH} replace />} />
+        <Route path="/:gameId" element={<SeasonLaunchMetrics />} />
+        <Route path="*" element={<Navigate to={DEFAULT_GAME_PATH} replace />} />
+      </Routes>
       <footer className="text-muted-foreground mt-8 space-y-3 text-center text-xs">
         <p>
           Data taken from{" "}

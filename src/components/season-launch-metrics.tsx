@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from "react"
 import { CircleHelp } from "lucide-react"
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -23,6 +29,16 @@ const GAMES: { id: GameId; label: string; banner: string }[] = [
   { id: "poe2", label: "Path of Exile 2", banner: publicUrl("game-banners/poe2.jpg") },
   { id: "last_epoch", label: "Last Epoch", banner: publicUrl("game-banners/lastepoch.jpg") },
 ]
+
+const GAME_IDS = new Set<GameId>(GAMES.map((g) => g.id))
+
+export const DEFAULT_GAME_PATH = `/${GAMES[0]!.id}`
+
+function isValidGameId(s: string): s is GameId {
+  return GAME_IDS.has(s as GameId)
+}
+
+const STEAM_SHARE_QUERY_KEY = "steam"
 
 /** One shared request — avoids duplicate fetches when Strict Mode remounts in dev. */
 let arpgSeasonsJsonPromise: Promise<ArpgSeasonsData> | null = null
@@ -290,6 +306,21 @@ function parseSteamShareInput(s: string): number | null {
   return n
 }
 
+function initialSteamShareStrFromLocation(gameId: GameId, isActiveTab: boolean): string {
+  if (
+    !isActiveTab ||
+    !hasMultistorePcEstimate(gameId) ||
+    typeof window === "undefined"
+  ) {
+    return String(readStoredSteamSharePct(gameId))
+  }
+  const parsed = parseSteamShareInput(
+    new URLSearchParams(window.location.search).get(STEAM_SHARE_QUERY_KEY) ?? "",
+  )
+  if (parsed != null) return String(parsed)
+  return String(readStoredSteamSharePct(gameId))
+}
+
 const dateUtcFormatter = new Intl.DateTimeFormat(undefined, {
   dateStyle: "long",
   timeZone: "UTC",
@@ -497,19 +528,56 @@ function GamePanel({
   banner,
   rows,
   peaksByDate,
+  isActiveTab,
 }: {
   gameId: GameId
   label: string
   banner: string
   rows: SeasonLaunch[]
   peaksByDate: ReadonlyMap<string, number | null> | undefined
+  isActiveTab: boolean
 }) {
   const showVersionColumn =
     gameId === "poe1" || gameId === "poe2" || gameId === "last_epoch"
   const multistorePc = hasMultistorePcEstimate(gameId)
+  const [searchParams, setSearchParams] = useSearchParams()
   const [steamShareStr, setSteamShareStr] = useState(() =>
-    String(readStoredSteamSharePct(gameId)),
+    initialSteamShareStrFromLocation(gameId, isActiveTab),
   )
+
+  useEffect(() => {
+    if (!multistorePc || !isActiveTab) return
+    const raw = searchParams.get(STEAM_SHARE_QUERY_KEY)
+    if (raw == null || raw === "") return
+    const parsed = parseSteamShareInput(raw)
+    if (parsed == null) return
+    const next = String(parsed)
+    queueMicrotask(() => {
+      setSteamShareStr((prev) => (prev !== next ? next : prev))
+    })
+  }, [multistorePc, isActiveTab, searchParams])
+
+  useEffect(() => {
+    if (!multistorePc || !isActiveTab) return
+    const effective = parseSteamShareInput(steamShareStr)
+    const defaultPct = DEFAULT_STEAM_SHARE_PCT[gameId]
+    const next = new URLSearchParams(searchParams)
+    if (effective != null && effective !== defaultPct) {
+      next.set(STEAM_SHARE_QUERY_KEY, String(effective))
+    } else {
+      next.delete(STEAM_SHARE_QUERY_KEY)
+    }
+    if (next.toString() !== searchParams.toString()) {
+      setSearchParams(next, { replace: true })
+    }
+  }, [
+    multistorePc,
+    isActiveTab,
+    gameId,
+    steamShareStr,
+    searchParams,
+    setSearchParams,
+  ])
 
   useEffect(() => {
     if (!multistorePc) return
@@ -646,6 +714,9 @@ function GamePanel({
 }
 
 export function SeasonLaunchMetrics() {
+  const { gameId: routeGameId } = useParams()
+  const navigate = useNavigate()
+
   const [data, setData] = useState<ArpgSeasonsData | null>(null)
   const [peaks, setPeaks] = useState<Partial<Record<GameId, ReadonlyMap<string, number | null>>>>(
     {},
@@ -696,6 +767,11 @@ export function SeasonLaunchMetrics() {
       cancelled = true
     }
   }, [data])
+
+  if (!routeGameId || !isValidGameId(routeGameId)) {
+    return <Navigate to={DEFAULT_GAME_PATH} replace />
+  }
+  const activeGameId = routeGameId
 
   if (loadError) {
     return <p className="text-destructive">{loadError}</p>
@@ -758,7 +834,13 @@ export function SeasonLaunchMetrics() {
           </p>
         )}
 
-        <Tabs defaultValue={GAMES[0]!.id} className="w-full min-w-0 gap-4">
+        <Tabs
+          value={activeGameId}
+          onValueChange={(id) => {
+            if (isValidGameId(id)) navigate(`/${id}`, { replace: false })
+          }}
+          className="w-full min-w-0 gap-4"
+        >
           <div className="overflow-x-auto pb-0.5">
             <TabsList variant="line" className="min-w-0 w-max max-w-full">
               {GAMES.map((g) => (
@@ -776,6 +858,7 @@ export function SeasonLaunchMetrics() {
                 banner={g.banner}
                 rows={data[g.id]}
                 peaksByDate={peaks[g.id]}
+                isActiveTab={g.id === activeGameId}
               />
             </TabsContent>
           ))}
