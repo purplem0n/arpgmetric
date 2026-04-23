@@ -1,0 +1,304 @@
+{
+    "diablo4": [
+        {
+            "name": "Steam & Season 2 — Season of Blood",
+            "date_utc": "2023-10-29"
+        },
+        {
+            "name": "Season 3 — Season of the Construct",
+            "date_utc": "2024-01-28"
+        },
+        {
+            "name": "Season 4 — Season of Loot Reborn",
+            "date_utc": "2024-05-19"
+        },
+        {
+            "name": "Season 5 — Season of the Infernal Hordes",
+            "date_utc": "2024-08-11"
+        },
+        {
+            "name": "Season 6 — Season of Hatred Rising (Vessel of Hatred launch window)",
+            "date_utc": "2024-10-13"
+        },
+        {
+            "name": "Season 7 — Season of Witchcraft",
+            "date_utc": "2025-01-26"
+        },
+        {
+            "name": "Season 8 — The Return of Belial",
+            "date_utc": "2025-05-04"
+        },
+        {
+            "name": "Season 9 — Sins of the Horadrim",
+            "date_utc": "2025-07-06"
+        },
+        {
+            "name": "Season 10 — Season of Infernal Chaos",
+            "date_utc": "2025-09-28"
+        },
+        {
+            "name": "Season 11 — Season of Divine Intervention",
+            "date_utc": "2025-12-14"
+        },
+        {
+            "name": "Season 12 — Season of Slaughter",
+            "date_utc": "2026-03-15"
+        }
+    ],
+    "poe1": [
+        {
+            "name": "Nemesis & Domination",
+            "version": "1.0.0",
+            "date_utc": "2013-10-26"
+        },
+        {
+            "name": "Ambush & Invasion (Sacrifice of the Vaal)",
+            "version": "1.1.0",
+            "date_utc": "2014-03-09"
+        },
+        {
+            "name": "Rampage & Beyond (Forsaken Masters)",
+            "version": "1.2.0",
+            "date_utc": "2014-08-23"
+        },
+        {
+            "name": "Torment & Bloodlines",
+            "version": "1.3.0",
+            "date_utc": "2014-12-14"
+        },
+        {
+            "name": "Warbands & Tempest (The Awakening)",
+            "version": "2.0.0",
+            "date_utc": "2015-07-12"
+        },
+        {
+            "name": "Talisman",
+            "version": "2.1.0",
+            "date_utc": "2015-12-13"
+        },
+        {
+            "name": "Perandus (Ascendancy)",
+            "version": "2.2.0",
+            "date_utc": "2016-03-04"
+        },
+        {
+            "name": "Prophecy",
+            "version": "2.3.0",
+            "date_utc": "2016-06-03"
+        },
+        {
+            "name": "Essence (Atlas of Worlds)",
+            "version": "2.4.0",
+            "date_utc": "2016-09-04"
+        },
+        {
+            "name": "Breach",
+            "version": "2.5.0",
+            "date_utc": "2016-12-04"
+        },
+        {
+            "name": "Legacy",
+            "version": "2.6.0",
+            "date_utc": "2017-03-03"
+        },
+        {
+            "name": "Harbinger (The Fall of Oriath)",
+            "version": "3.0.0",
+            "date_utc": "2017-08-06"
+        },
+        {
+            "name": "Abyss (War for the Atlas)",
+            "version": "3.1.0",
+            "date_utc": "2017-12-10"
+        },
+        {
+            "name": "Bestiary",
+            "version": "3.2.0",
+            "date_utc": "2018-03-02"
+        },
+        {
+            "name": "Incursion",
+            "version": "3.3.0",
+            "date_utc": "2018-06-03"
+        },
+        {
+            "name": "Delve",
+            "version": "3.4.0",
+            "date_utc": "2018-08-31"
+        },
+        {
+            "name": "Betrayal",
+            "version": "3.5.0",
+            "date_utc": "2018-12-09"
+        },
+        {
+            "name": "Synthesis",
+            "version": "3.6.0",
+            "date_utc": "2019-03-08"
+        },
+        {
+            "name": "Legion",
+            "version": "3.7.0",
+            "date_utc": "2019-06-07"
+        },
+        {
+            "name": "Blight",
+            "version": "3.8.0",
+            "date_utc": "2019-09-06"
+        },
+        {
+            "name": "Metamorph (Conquerors of the Atlas)",
+            "version": "3.9.0",
+            "date_utc": "2019-12-15"
+        },
+        {
+            "name": "Delirium",
+            "version": "3.10.0",
+            "date_utc": "2020-03-13"
+        },
+        {
+            "name": "Harvest",
+            "version": "3.11.0",
+            "date_utc": "2020-06-19"
+        },
+        {
+            "name": "Heist",
+            "version": "3.12.0",
+            "date_utc": "2020-09-18"
+        },
+        {
+            "name": "Ritual (Echoes of the Atlas)",
+            "version": "3.13.0",
+            "date_utc": "2021-01-15"
+        },
+        {
+            "name": "Ultimatum",
+            "version": "3.14.0",
+            "date_utc": "2021-04-17"
+        },
+        {
+            "name": "Expedition",
+            "version": "3.15.0",
+            "date_utc": "2021-07-23"
+        },
+        {
+            "name": "Scourge",
+            "version": "3.16.0",
+            "date_utc": "2021-10-22"
+        },
+        {
+            "name": "Archnemesis (Siege of the Atlas)",
+            "version": "3.17.0",
+            "date_utc": "2022-02-04"
+        },
+        {
+            "name": "Sentinel",
+            "version": "3.18.0",
+            "date_utc": "2022-05-13"
+        },
+        {
+            "name": "Lake of Kalandra",
+            "version": "3.19.0",
+            "date_utc": "2022-08-19"
+        },
+        {
+            "name": "The Forbidden Sanctum",
+            "version": "3.20.0",
+            "date_utc": "2022-12-09"
+        },
+        {
+            "name": "Crucible",
+            "version": "3.21.0",
+            "date_utc": "2023-04-07"
+        },
+        {
+            "name": "Trial of the Ancestors (Ancestor)",
+            "version": "3.22.0",
+            "date_utc": "2023-08-18"
+        },
+        {
+            "name": "Affliction",
+            "version": "3.23.0",
+            "date_utc": "2023-12-08"
+        },
+        {
+            "name": "Necropolis",
+            "version": "3.24.0",
+            "date_utc": "2024-03-29"
+        },
+        {
+            "name": "Settlers of Kalguur",
+            "version": "3.25.0",
+            "date_utc": "2024-07-26"
+        },
+        {
+            "name": "Secrets of the Atlas (Mercenaries)",
+            "version": "3.26.0",
+            "date_utc": "2025-06-13"
+        },
+        {
+            "name": "Keepers of the Flame (Keepers)",
+            "version": "3.27.0",
+            "date_utc": "2025-10-31"
+        },
+        {
+            "name": "Mirage",
+            "version": "3.28.0",
+            "date_utc": "2026-03-06"
+        }
+    ],
+    "poe2": [
+        {
+            "name": "Early Access launch",
+            "version": "0.1.0",
+            "date_utc": "2024-12-08"
+        },
+        {
+            "name": "Dawn of the Hunt",
+            "version": "0.2.0",
+            "date_utc": "2025-04-06"
+        },
+        {
+            "name": "The Third Edict — Rise of the Abyssal",
+            "version": "0.3.0",
+            "date_utc": "2025-08-31"
+        },
+        {
+            "name": "The Last of the Druids",
+            "version": "0.4.0",
+            "date_utc": "2025-12-12"
+        },
+        {
+            "name": "Return of the Ancients",
+            "version": "0.5.0",
+            "date_utc": "2026-05-29"
+        }
+    ],
+    "last_epoch": [
+        {
+            "name": "Cycle 1.0",
+            "version": "1.0.0",
+            "date_utc": "2024-02-25"
+        },
+        {
+            "name": "Season 1 — Harbingers of Ruin",
+            "version": "1.1.0",
+            "date_utc": "2024-07-09"
+        },
+        {
+            "name": "Season 2 — Tombs of the Erased",
+            "version": "1.2.0",
+            "date_utc": "2025-04-19"
+        },
+        {
+            "name": "Season 3 — Beneath Ancient Skies",
+            "version": "1.3.0",
+            "date_utc": "2025-08-23"
+        },
+        {
+            "name": "Season 4 — Shattered Omens",
+            "version": "1.4.0",
+            "date_utc": "2026-03-29"
+        }
+    ]
+}
