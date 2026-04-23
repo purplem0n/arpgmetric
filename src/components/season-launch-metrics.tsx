@@ -713,14 +713,37 @@ export function SeasonLaunchMetrics() {
             <h1 className="font-heading min-w-0 text-lg font-medium">
               ARPG season metrics
             </h1>
-            <a
-              href="https://github.com/purplem0n/arpgmetric/issues/new"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground shrink-0 text-sm underline underline-offset-2 hover:opacity-90"
-            >
-              Report a bug
-            </a>
+            <div className="flex shrink-0 items-center gap-2">
+              <a
+                href="https://github.com/purplem0n/arpgmetric/issues/new"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground text-sm underline underline-offset-2 hover:opacity-90"
+              >
+                Report a bug
+              </a>
+              <Button
+                asChild
+                size="icon"
+                variant="outline"
+                className="bg-white dark:bg-white hover:bg-white/90 dark:hover:bg-white/90"
+              >
+                <a
+                  href="https://github.com/purplem0n/arpgmetric"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View repository on GitHub"
+                >
+                  <img
+                    src={publicUrl("github_icon.png")}
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="size-5"
+                  />
+                </a>
+              </Button>
+            </div>
           </div>
           <p className="text-muted-foreground text-sm max-w-2xl">
             The goal of this website is to show pc player metrics of popular ARPGs by
