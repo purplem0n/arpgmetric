@@ -76,7 +76,7 @@ const PC_ESTIMATE_DEFAULT_SOURCES: Record<
 > = {
   diablo4: {
     intro:
-      "Blizzard does not publish a Steam vs Battle.net split for PC. The app default (~22%) assumes Steam is a minority share after a Battle.net-first PC launch. Each season may have a different Steam % of total PC players.",
+      "Blizzard does not publish a Steam vs Battle.net split for PC. The app default (~13%) assumes Steam is a minority share after a Battle.net-first PC launch. Each season may have a different Steam % of total PC players.",
     links: [
       {
         label: "Blizzard: Diablo IV coming to Steam (Oct 2024)",
@@ -116,12 +116,12 @@ const PC_ESTIMATE_DEFAULT_SOURCES: Record<
 
 /**
  * Defaults are rough PC-only “Steam as % of concurrent PC players” guesses for the estimator.
- * D4: no official split; Steam Oct 2024 after Battle.net-first PC → minority on Steam (~15–30%).
+ * D4: no official split; Battle.net-first PC → minority Steam share; default 13%.
  * PoE1: GGG Betrayal launch ~65% Steam / ~35% standalone (188,970 peak, 123,565 Steam).
  * PoE2: Steam-heavy early access; total PC CCU undisclosed → ~75% Steam as a midpoint guess.
  */
 const DEFAULT_STEAM_SHARE_PCT: Record<GameId, number> = {
-  diablo4: 22,
+  diablo4: 13,
   poe1: 65,
   poe2: 75,
   last_epoch: 100,

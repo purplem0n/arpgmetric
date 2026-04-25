@@ -8,11 +8,11 @@ A small static web app that compares **launch-day Steam concurrent player peaks*
 
 These are **sample rows** with the app’s **default** “% of PC players on Steam” for each multistore title. **Est. PC peak** is `Steam peak ÷ (Steam % / 100)` and is **not** an official all-platform figure from the publishers.
 
-### Diablo IV — default Steam share **22%**
+### Diablo IV — default Steam share **13%**
 
 | Season / league | Peak day (UTC) | Steam peak | Est. PC peak |
 | --- | --- | ---:| ---:|
-| Season 10 — Season of Infernal Chaos | September 28, 2025 | 49,001 | 222,732 |
+| Season 10 — Season of Infernal Chaos | September 28, 2025 | 49,001 | 376,931 |
 
 ### Path of Exile 1 — default Steam share **65%**
 
