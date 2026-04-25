@@ -58,7 +58,7 @@ function loadArpgSeasonsData(): Promise<ArpgSeasonsData> {
   return arpgSeasonsJsonPromise
 }
 
-/** Games with a meaningful split between Steam and a standalone PC client (estimate only). */
+/** Games with a meaningful split between Steam and another PC client (estimate only). */
 const MULTISTORE_PC_ESTIMATE_GAMES = new Set<GameId>(["diablo4", "poe1", "poe2"])
 
 type MultistoreEstimateGameId = "diablo4" | "poe1" | "poe2"
@@ -380,14 +380,13 @@ const EST_PC_PEAK_RANK_BADGE_CLASS: Record<1 | 2 | 3, string> = {
   3: "border-orange-500/40 bg-orange-500/15 text-orange-900 dark:text-orange-300 dark:bg-orange-500/20 dark:border-orange-500/35",
 }
 
-function estPcPeakRankByRowKey(
-  rows: SeasonLaunch[],
-  peaksByDate: ReadonlyMap<string, number | null> | undefined,
-  steamSharePercent: number | null,
+function rankTopThreeByNumericRow<T extends { date_utc: string; name: string }>(
+  rows: T[],
+  valueForRow: (row: T) => number | null,
 ): Map<string, 1 | 2 | 3> {
   const entries: { key: string; n: number }[] = []
   for (const row of rows) {
-    const n = estimatedPcPeakNumber(peaksByDate, row.date_utc, steamSharePercent)
+    const n = valueForRow(row)
     if (n != null) entries.push({ key: `${row.date_utc}-${row.name}`, n })
   }
   const distinctDesc = [...new Set(entries.map((e) => e.n))].sort((a, b) => b - a)
@@ -403,18 +402,43 @@ function estPcPeakRankByRowKey(
   return out
 }
 
-function EstPcPeakTableCell({
-  peaksByDate,
-  dateKey,
-  steamSharePercent,
+function steamPeakNumber(
+  byDate: ReadonlyMap<string, number | null> | undefined,
+  dateKey: string,
+): number | null {
+  if (!byDate) return null
+  const v = byDate.get(dateKey)
+  return v ?? null
+}
+
+function steamPeakRankByRowKey(
+  rows: SeasonLaunch[],
+  peaksByDate: ReadonlyMap<string, number | null> | undefined,
+): Map<string, 1 | 2 | 3> {
+  return rankTopThreeByNumericRow(rows, (row) =>
+    steamPeakNumber(peaksByDate, row.date_utc),
+  )
+}
+
+function estPcPeakRankByRowKey(
+  rows: SeasonLaunch[],
+  peaksByDate: ReadonlyMap<string, number | null> | undefined,
+  steamSharePercent: number | null,
+): Map<string, 1 | 2 | 3> {
+  return rankTopThreeByNumericRow(rows, (row) =>
+    estimatedPcPeakNumber(peaksByDate, row.date_utc, steamSharePercent),
+  )
+}
+
+function RankedMetricTableCell({
+  text,
   rank,
+  rankAriaLabelPrefix,
 }: {
-  peaksByDate: ReadonlyMap<string, number | null> | undefined
-  dateKey: string
-  steamSharePercent: number | null
+  text: string
   rank: 1 | 2 | 3 | undefined
+  rankAriaLabelPrefix: string
 }) {
-  const text = formatEstimatedPcPeak(peaksByDate, dateKey, steamSharePercent)
   return (
     <div className="flex items-center justify-end gap-2">
       <span
@@ -428,12 +452,50 @@ function EstPcPeakTableCell({
         <Badge
           variant="outline"
           className={EST_PC_PEAK_RANK_BADGE_CLASS[rank]}
-          aria-label={`Est. PC peak rank ${rank} in this table`}
+          aria-label={`${rankAriaLabelPrefix} rank ${rank} in this table`}
         >
           {rank}
         </Badge>
       )}
     </div>
+  )
+}
+
+function SteamPeakTableCell({
+  peaksByDate,
+  dateKey,
+  rank,
+}: {
+  peaksByDate: ReadonlyMap<string, number | null> | undefined
+  dateKey: string
+  rank: 1 | 2 | 3 | undefined
+}) {
+  return (
+    <RankedMetricTableCell
+      text={formatPeak(peaksByDate, dateKey)}
+      rank={rank}
+      rankAriaLabelPrefix="Steam peak"
+    />
+  )
+}
+
+function EstPcPeakTableCell({
+  peaksByDate,
+  dateKey,
+  steamSharePercent,
+  rank,
+}: {
+  peaksByDate: ReadonlyMap<string, number | null> | undefined
+  dateKey: string
+  steamSharePercent: number | null
+  rank: 1 | 2 | 3 | undefined
+}) {
+  return (
+    <RankedMetricTableCell
+      text={formatEstimatedPcPeak(peaksByDate, dateKey, steamSharePercent)}
+      rank={rank}
+      rankAriaLabelPrefix="Est. PC peak"
+    />
   )
 }
 
@@ -455,6 +517,10 @@ function SeasonTable({
   pcEstimateSteamSharePct: number | null | undefined
 }) {
   const showEstPcPeak = pcEstimateSteamSharePct !== undefined
+  const steamPeakRanks = useMemo(
+    () => steamPeakRankByRowKey(rows, peaksByDate),
+    [rows, peaksByDate],
+  )
   const estPcPeakRanks = useMemo(
     () =>
       estPcPeakRankByRowKey(rows, peaksByDate, pcEstimateSteamSharePct ?? null),
@@ -501,8 +567,12 @@ function SeasonTable({
               <td className="px-3 py-2 align-top tabular-nums text-muted-foreground">
                 {formatLaunchDate(row.date_utc)}
               </td>
-              <td className="px-3 py-2 align-top text-right tabular-nums text-muted-foreground">
-                {formatPeak(peaksByDate, row.date_utc)}
+              <td className="px-3 py-2 align-top text-right tabular-nums">
+                <SteamPeakTableCell
+                  peaksByDate={peaksByDate}
+                  dateKey={row.date_utc}
+                  rank={steamPeakRanks.get(`${row.date_utc}-${row.name}`)}
+                />
               </td>
               {showEstPcPeak && (
                 <td className="px-3 py-2 align-top text-right tabular-nums">
